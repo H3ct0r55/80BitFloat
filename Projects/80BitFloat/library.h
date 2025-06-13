@@ -1,6 +1,0 @@
-#ifndef INC_80BITFLOAT_LIBRARY_H
-#define INC_80BITFLOAT_LIBRARY_H
-
-void hello();
-
-#endif //INC_80BITFLOAT_LIBRARY_H

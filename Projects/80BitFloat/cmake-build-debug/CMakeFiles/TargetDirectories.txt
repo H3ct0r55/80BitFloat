@@ -1,3 +1,0 @@
-/Users/hector/Projects/80BitFloat/cmake-build-debug/CMakeFiles/80BitFloat.dir
-/Users/hector/Projects/80BitFloat/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/hector/Projects/80BitFloat/cmake-build-debug/CMakeFiles/rebuild_cache.dir
