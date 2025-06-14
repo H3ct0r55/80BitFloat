@@ -6,8 +6,7 @@
 #include <cstdint>
 #include <cmath>
 #include <bit>
-#include <algorithm>   // for std::fill
-#include <ostream>
+#include <algorithm>
 #include <iomanip>
 #include <type_traits>
 
@@ -101,10 +100,7 @@ public:
         return sign ? -result : result;
     }
 
-    // Generic conversion to *any* arithmetic type via long double
-    template<typename T,
-             typename = std::enable_if_t<
-                 std::is_arithmetic_v<T> && !std::is_same_v<T, long double>>>
+    template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T> && !std::is_same_v<T, long double>>>
     explicit operator T() const noexcept {
         return static_cast<T>(static_cast<long double>(*this));
     }
@@ -114,19 +110,16 @@ public:
         if (sign) value = -value;
 
         int exp;
-        long double frac = std::frexp(value, &exp); // 0.5 ≤ frac < 1
-        // ── Canonicalise for IEEE‑754 extended‑precision ───────────────
-        exp   -= 1;    // compensate for the ×2 below
-        frac  *= 2.0L; // now 1 ≤ frac < 2 so the explicit integer‑bit is 1
+        long double frac = std::frexp(value, &exp);
+        exp   -= 1;
+        frac  *= 2.0L;
 
         static constexpr long double kTwo63 = 0x1p63L;
-        // Scale to a 64‑bit significand (integer‑bit + 63 fraction bits)
         std::uint64_t mantissa = static_cast<std::uint64_t>(frac * kTwo63);
 
-        // Rare case: rounding made mantissa wrap to 0 (i.e. 2^64).  Re‑normalise.
         if (mantissa == 0) {
-            mantissa = 0x8000000000000000ULL; // 1 << 63
-            ++exp;                            // bump exponent back up
+            mantissa = 0x8000000000000000ULL;
+            ++exp;
         }
 
         std::uint16_t biasedExp = static_cast<std::uint16_t>(exp + 16383);
@@ -141,7 +134,6 @@ public:
     }
 
 
-    // Assignment from any arithmetic type (e.g., int, double, long double)
     template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
     Float80& operator=(T value) {
         Float80 tmp(static_cast<long double>(value));
@@ -149,22 +141,17 @@ public:
         return *this;
     }
 
-    // Stream output: prints the numeric value followed by raw hex bytes
     friend std::ostream& operator<<(std::ostream& os, const Float80& f) {
-        // save stream state
         std::ios_base::fmtflags old_flags = os.flags();
         char old_fill = os.fill();
 
-        // numeric value
         os << static_cast<long double>(f) << " (0x";
 
-        // raw bytes in big‑endian order
         os << std::hex << std::uppercase << std::setfill('0');
         for (int i = 0; i < 10; ++i) {
             os << std::setw(2) << static_cast<int>(f.bits[i]);
         }
 
-        // restore stream state
         os.flags(old_flags);
         os.fill(old_fill);
         os << ')';
