@@ -1,0 +1,107 @@
+
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# CMake build directories
+/build/
+build*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+install_manifest.txt
+
+# Test and coverage files
+*.gcda
+*.gcno
+*.gcov
+*.profraw
+*.profdata
+
+# Backup and swap files
+*~
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Logs and generated files
+*.log
+*.trace
+
+# UnitTest++ output
+unittest.cfg
+
+# Coverage output
+coverage/
+
+# clangd index
+.cache/
+.clangd/
+compile_commands.json
+
+# VSCode settings (if occasionally used)
+.vscode/
+
+# Python cache (sometimes used with build scripts)
+__pycache__/
+*.py[cod]
+
+# MacOS system files
+.DS_Store
+
+# Windows thumbnails
+Thumbs.db
+
+# Archive or packaging
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# GitHub template
+.github/
+
+# JetBrains CMake build
+cmake-build-*/
+
+# Custom local config
+local_config.json
+
+#testing files
+main.cpp
